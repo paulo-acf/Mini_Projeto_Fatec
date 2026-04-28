@@ -85,47 +85,23 @@ def LGPD(row):
     return row
 
 
-users = [] # Lista para guardar os resultados da consulta SQL depois de passar pela função LGPD
+usersss = [] # Lista para guardar os resultados da consulta SQL depois de passar pela função LGPD
 
 
-
-
-
-
-
-
-
-
-
-
-# ============================================================
-# CONEXÃO E CONSULTA SQL
-# ============================================================
-
-# abre conexão com banco
 with engine.connect() as conn:
-
-    # executa SQL puro
-    result = conn.execute(
-        text("SELECT * FROM usuarios LIMIT 5;")
+# with ... as conn --> Garante que, depois, a conexão será fechada automaticamente
+# engine.connect() --> Cria uma conexão com o banco de dados
+    result = conn.execute(text( # text --> Permite usar SQL puro
+        "SELECT * FROM usuarios LIMIT 5;"
+        )
     )
-
-    # percorre os 5 registros encontrados
-    for row in result:
-
-        # passa cada linha para função LGPD
-        row = LGPD(row)
-
+    for row in result: # Percorre os n registros encontrados na linha acima
+        row = LGPD(row) 
+        # LGPD(row) --> Chama a função LGPD, passando row como argumento
+        # row = ... --> O valor retornado pela função substitui o row original
         # adiciona resultado na lista
-        users.append(row)
+        usersss.append(row) # Adiciona o resultado na lista "users"
 
 
-# ============================================================
-# MOSTRAR RESULTADOS
-# ============================================================
-
-# percorre lista users
-for user in users:
-
-    # mostra cada registro no terminal
+for user in usersss:
     print(user)
